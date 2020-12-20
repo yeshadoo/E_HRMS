@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmu.hrms.mapper.ChangeDeptMapper">
+  <resultMap id="BaseResultMap" type="com.dmu.hrms.entity.ChangeDept">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="current_dept" jdbcType="VARCHAR" property="currentDept" />
+    <result column="targer_dept" jdbcType="VARCHAR" property="targerDept" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from change_dept
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dmu.hrms.entity.ChangeDept">
+    insert into change_dept (id, staff_id, sname, 
+      current_dept, targer_dept, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, 
+      #{currentDept,jdbcType=VARCHAR}, #{targerDept,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.dmu.hrms.entity.ChangeDept">
+    update change_dept
+    set staff_id = #{staffId,jdbcType=INTEGER},
+      sname = #{sname,jdbcType=VARCHAR},
+      current_dept = #{currentDept,jdbcType=VARCHAR},
+      targer_dept = #{targerDept,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, staff_id, sname, current_dept, targer_dept, status
+    from change_dept
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, staff_id, sname, current_dept, targer_dept, status
+    from change_dept
+  </select>
+  <resultMap id="BaseResultMap" type="com.dmu.hrms.entity.ChangeDept">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="staff_id" jdbcType="INTEGER" property="staffId" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="current_dept" jdbcType="VARCHAR" property="currentDept" />
+    <result column="targer_dept" jdbcType="VARCHAR" property="targerDept" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, staff_id, sname, current_dept, targer_dept, status
+  </sql>
+  <select id="selectByExample" parameterType="com.dmu.hrms.entity.ChangeDeptExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from change_dept
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from change_dept
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from change_dept
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dmu.hrms.entity.ChangeDeptExample">
+    delete from change_dept
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dmu.hrms.entity.ChangeDept">
+    insert into change_dept (id, staff_id, sname, 
+      current_dept, targer_dept, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, 
+      #{currentDept,jdbcType=VARCHAR}, #{targerDept,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dmu.hrms.entity.ChangeDept">
+    insert into change_dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="staffId != null">
+        staff_id,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="currentDept != null">
+        current_dept,
+      </if>
+      <if test="targerDept != null">
+        targer_dept,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="currentDept != null">
+        #{currentDept,jdbcType=VARCHAR},
+      </if>
+      <if test="targerDept != null">
+        #{targerDept,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dmu.hrms.entity.ChangeDeptExample" resultType="java.lang.Integer">
+    select count(*) from change_dept
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update change_dept
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffId != null">
+        staff_id = #{record.staffId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sname != null">
+        sname = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentDept != null">
+        current_dept = #{record.currentDept,jdbcType=VARCHAR},
+      </if>
+      <if test="record.targerDept != null">
+        targer_dept = #{record.targerDept,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update change_dept
+    set id = #{record.id,jdbcType=INTEGER},
+      staff_id = #{record.staffId,jdbcType=INTEGER},
+      sname = #{record.sname,jdbcType=VARCHAR},
+      current_dept = #{record.currentDept,jdbcType=VARCHAR},
+      targer_dept = #{record.targerDept,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dmu.hrms.entity.ChangeDept">
+    update change_dept
+    <set>
+      <if test="staffId != null">
+        staff_id = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="currentDept != null">
+        current_dept = #{currentDept,jdbcType=VARCHAR},
+      </if>
+      <if test="targerDept != null">
+        targer_dept = #{targerDept,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dmu.hrms.entity.ChangeDept">
+    update change_dept
+    set staff_id = #{staffId,jdbcType=INTEGER},
+      sname = #{sname,jdbcType=VARCHAR},
+      current_dept = #{currentDept,jdbcType=VARCHAR},
+      targer_dept = #{targerDept,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
