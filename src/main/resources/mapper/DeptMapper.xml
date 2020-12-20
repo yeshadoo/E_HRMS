@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dmu.hrms.mapper.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.dmu.hrms.entity.Dept">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dname" jdbcType="VARCHAR" property="dname" />
+    <collection property="staffs" ofType="Staff" select="selectAll" column="id"></collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dept
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dmu.hrms.entity.Dept">
+    insert into dept (id, dname)
+    values (#{id,jdbcType=INTEGER}, #{dname,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.dmu.hrms.entity.Dept">
+    update dept
+    set dname = #{dname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, dname
+    from dept
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, dname
+    from dept
+  </select>
+</mapper>

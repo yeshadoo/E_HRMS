@@ -1,0 +1,41 @@
+# 端口
+server:
+      port: 8080
+      context-path: /
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+mybatis:
+  config-location: classpath:mybatis/mybatis-cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.atguigu.springcloud.entities    # 所有Entity别名类所在包
+
+
+# 数据库配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver             # mysql驱动包
+    url: jdbc:mysql://localhost:3306/hrms?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE              # 数据库名称
+    username: root
+    password: 777235
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                    # 等待连接获取的最大超时时间
+
+  # 引擎模板配置
+  thymeleaf:
+    cache: false  # 关闭缓存
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: utf-8 # 指定字符集编码
+    mode: HTML5
+    prefix: classpath:/templates/  # 指定 thymeleaf 模板路径
+    suffix: .html
+  mvc:
+    static-path-pattern: /static/** # js ,css 等静态文件路径

@@ -1,23 +1,18 @@
 package com.dmu.hrms.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.List;
+
+@NoArgsConstructor
+@Data
+@Accessors(chain=true)
 public class Post {
     private Integer id;
 
     private String pname;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getPname() {
-        return pname;
-    }
-
-    public void setPname(String pname) {
-        this.pname = pname;
-    }
+    private List<Staff> staffs;
 }

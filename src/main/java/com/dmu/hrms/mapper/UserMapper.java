@@ -1,8 +1,10 @@
 package com.dmu.hrms.mapper;
 
 import com.dmu.hrms.entity.User;
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -13,4 +15,6 @@ public interface UserMapper {
     List<User> selectAll();
 
     int updateByPrimaryKey(User record);
+
+    User findByUsername(String username);
 }

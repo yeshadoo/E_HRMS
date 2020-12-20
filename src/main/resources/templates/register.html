@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新用户注册</title>
+    <!--分析；在body中设置背景，插入一个table 或者div ，分为三部分，三部分都浮动，按照百分比来分（或者拿尺子测下像素）
+    左边是p标签，右边是a标签嵌套p标签
+    中间是注册表单
+    首先把位置定好在中间位置；margin ;
+    -->
+    <style type="text/css">
+        body {
+            background-image: url("../img/bg.jpg");
+        }
+
+        /*设置所有元素不会被撑大 ,并且盒子的宽高是边框的宽高 设置margin=0，padding=0*/
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        body > div {
+            /*最外层容器指定大小,边框，水平居中, */
+            width: 850px;
+            height: 400px;
+            background-color: white;
+            border: gray solid 8px;
+            margin: 60px auto;
+        }
+
+        /* -------------------------------------------------------- */
+        /*左浮动*/
+        .left {
+            float: left;
+            width: 25%;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .first {
+            font-size: 20px;
+            color: orange;
+
+        }
+
+        .left p:last-child {
+            font-size: 20px;
+            color: gray;
+        }
+
+        /* -------------------------------------------------------- */
+
+        .mid {
+            font-size: 15px;
+            float: left;
+            width: 47%;
+        }
+
+        .table {
+            margin-top: 25px;
+            float: left;
+        }
+
+        .t-left {
+            /*文字靠左边*/
+            text-align: left;
+
+        }
+
+        .t-right {
+        }
+
+        /* 表单中的文本框，日期框，密码框使用属性选择器，宽256，高32，行高32，内边距上下6，左右12，
+        圆角4，边框：1 实线 颜色#a6a6a6，右浮动*/
+        input[type="text"], input[type="date"], input[type="password"], input[type="email"],
+        input[type="tel"], input[type="radio"] {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 4px; /*圆角*/
+            border: gray solid 1px;
+            margin-left: 30px; /*指定左边距，调节左边距的距离*/
+        }
+
+        input[type="radio"] {
+        }
+
+        /* -------------------------------------------------------- */
+        .right {
+            float: right;
+            width: 25%;
+        }
+
+        .right p {
+            font-size: 15px;
+            padding: 10px 10px 0px 0px;
+            float: right;
+            margin-left: 30px;
+        }
+
+        /*验证码*/
+        .check {
+            margin-left: 30px;
+        }
+
+
+    </style>
+</head>
+<script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<body>
+<!--最外层容器-->
+<div>
+    <!--左容器-->
+    <div class="left">
+        <p class="first">新用户注册</p>
+        <p class="third">user register</p>
+    </div>
+    <!--中容器  插入表格容器-->
+    <div class="mid">
+        <div class="table">
+            <!--表格容器中的table需要提交表单，使用form-->
+            <!--表格9行2列-->
+            <table><!--用户名，密码，邮箱姓名，手机号，性别，生日，验证码，提交-->
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="username">用户名</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="username" id="username" placeholder="请输入用户名"></td>
+                </tr>
+                <tr><!--第2行-->
+                    <td class="t-left">
+                        <lable for="password">密码</lable>
+                    </td>
+                    <td class="t-right"><input type="password" name="password" id="password" placeholder="请输入密码">
+                    </td>
+                </tr>
+                <tr><!--第2行-->
+                    <td class="t-left">
+                        <lable for="password">确认密码</lable>
+                    </td>
+                    <td class="t-right"><input type="password" name="passwordTwo" id="passwordTwo" placeholder="请输入密码">
+                    </td>
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="email">姓名</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="name" id="name" ></td>
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="tel">手机号</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="phone" id="phone" placeholder="请输入手机号"></td>
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="tel">住址</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="address" id="address"></td>
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">身份证号</td>
+                    <td class="t-right"><input type="text" name="ident"></td>
+                </tr>
+                <tr align="center"><!--第一行-->
+                    <td colspan="2">
+                        <button onclick="register()">注册</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <!--右容器  -->
+    <div class="right">
+        <p>已有账号？<a href="/login">立即登陆</a></p>
+    </div>
+</div>
+
+</body>
+<script>
+    function register() {
+        var name = $("#name").val();
+        var username = $("#username").val();
+        var password1 = $("#password").val();
+        var password2 = $("#passwordTwo").val();
+        var address = $("#address").val();
+        var phone = $("#phone").val();
+        var ident = $("#ident").val();
+        if (Number(password1) == Number(password2)){
+            $.post("/register",{name:name,username:username,password:password1,address:address,phone:phone,ident:ident},function (res) {
+                if (res ==true){
+                    alert("注册成功");
+                    window.location.href ="/login";
+                } else {
+                    alert("注册失败，请检查数据重试");
+                }
+            })
+        }else {
+            alert("两次密码不一致！");
+        }
+    }
+</script>
+</html>
