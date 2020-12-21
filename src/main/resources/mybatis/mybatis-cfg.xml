@@ -19,6 +19,8 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml" />
         <mapper resource="mapper/StaffMapper.xml" />
+        <mapper resource="mapper/DeptMapper.xml" />
+        <mapper resource="mapper/PostMapper.xml" />
     </mappers>
 </configuration>
 

@@ -10,8 +10,8 @@
     <result column="post_id" jdbcType="INTEGER" property="postId" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="level" jdbcType="VARCHAR" property="level" />
-    <association property="dept" select="selectByPrimaryKey" column="dept_id" javaType="Dept"></association>
-    <association property="post" select="selectByPrimaryKey" column="post_id" javaType="Post"></association>
+    <association property="dept" select="com.dmu.hrms.mapper.DeptMapper.selectByPrimaryKey" column="dept_id" javaType="com.dmu.hrms.entity.Dept"></association>
+    <association property="post" select="com.dmu.hrms.mapper.PostMapper.selectByPrimaryKey" column="post_id" javaType="com.dmu.hrms.entity.Post"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from staff

@@ -5,7 +5,9 @@ import com.dmu.hrms.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -24,5 +26,17 @@ public class StaffController {
         List<Staff> staffs = staffService.selectAll();
         model.addAttribute("staffList",staffs);
         return "staffList";
+    }
+
+    @RequestMapping("/goAddStaff")
+    public String goAddStaff(){
+        return "staffAdd";
+    }
+
+    @PostMapping("/addStaff")
+    @ResponseBody
+    public Boolean addStaff(Staff staff){
+        staffService.insert(staff);
+        return true;
     }
 }

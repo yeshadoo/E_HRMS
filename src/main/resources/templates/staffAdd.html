@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入职信息填写</title>
+    <!--分析；在body中设置背景，插入一个table 或者div ，分为三部分，三部分都浮动，按照百分比来分（或者拿尺子测下像素）
+    左边是p标签，右边是a标签嵌套p标签
+    中间是注册表单
+    首先把位置定好在中间位置；margin ;
+    -->
+    <style type="text/css">
+        body {
+            background-image: url("templates/img/bg.jpg");
+        }
+
+        /*设置所有元素不会被撑大 ,并且盒子的宽高是边框的宽高 设置margin=0，padding=0*/
+        * {
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        body > div {
+            /*最外层容器指定大小,边框，水平居中, */
+            width: 850px;
+            height: 400px;
+            background-color: white;
+            border: gray solid 8px;
+            margin: 60px auto;
+        }
+
+        /* -------------------------------------------------------- */
+        /*左浮动*/
+        .left {
+            float: left;
+            width: 25%;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .first {
+            font-size: 20px;
+            color: orange;
+
+        }
+
+        .left p:last-child {
+            font-size: 20px;
+            color: gray;
+        }
+
+        /* -------------------------------------------------------- */
+
+        .mid {
+            font-size: 15px;
+            float: left;
+            width: 47%;
+        }
+
+        .table {
+            margin-top: 25px;
+            float: left;
+        }
+
+        .t-left {
+            /*文字靠左边*/
+            text-align: left;
+
+        }
+
+        .t-right {
+        }
+
+        /* 表单中的文本框，日期框，密码框使用属性选择器，宽256，高32，行高32，内边距上下6，左右12，
+        圆角4，边框：1 实线 颜色#a6a6a6，右浮动*/
+        input[type="text"], input[type="date"], input[type="password"], input[type="email"],select,button,
+        input[type="tel"], input[type="radio"] {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 4px; /*圆角*/
+            border: gray solid 1px;
+            margin-left: 30px; /*指定左边距，调节左边距的距离*/
+        }
+
+        input[type="radio"] {
+        }
+
+        /* -------------------------------------------------------- */
+        .right {
+            float: right;
+            width: 25%;
+        }
+
+        .right p {
+            font-size: 15px;
+            padding: 10px 10px 0px 0px;
+            float: right;
+            margin-left: 30px;
+        }
+
+        /*验证码*/
+        .check {
+            margin-left: 30px;
+        }
+
+
+    </style>
+
+</head>
+<script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<body onload="getDepts(),getPosts()">
+<!--最外层容器-->
+<div>
+    <!--左容器-->
+    <div class="left">
+        <p class="first">入职信息填写</p>
+        <p class="third">user register</p>
+    </div>
+    <!--中容器  插入表格容器-->
+    <div class="mid">
+        <div class="table">
+            <!--表格容器中的table需要提交表单，使用form-->
+            <!--表格9行2列-->
+            <table><!--用户名，密码，邮箱姓名，手机号，性别，生日，验证码，提交-->
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="username">姓名</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="sname" id="sname" placeholder="请输入姓名"></td>
+                </tr>
+                <tr><!--第2行-->
+                    <td class="t-left">
+                        <lable for="password">电话</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="phone" id="phone" placeholder="请输入手机号">
+                    </td>
+                </tr>
+                <tr><!--第2行-->
+                    <td class="t-left">
+                        <lable for="password">邮箱</lable>
+                    </td>
+                    <td class="t-right"><input type="text" name="email" id="email" placeholder="请输入邮箱">
+                    </td>
+                </tr>
+                <tr >
+                    <td class="t-left">
+                        <lable for="email">部门</lable>
+                    </td>
+                    <td class="t-right">
+                        <select  id="dept"></select>
+                    </td>
+
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="tel">岗位</lable>
+                    </td>
+                    <td class="t-right">
+                        <select  id="parentId2"></select>
+                    </td>
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">
+                        <lable for="tel">入职方式</lable>
+                    </td>
+                    <td>
+                        <select>
+                            <option>人才库入职</option>
+                            <option>实习生入职</option>
+                            <option>普通入职</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr><!--第一行-->
+                    <td class="t-left">职级</td>
+                    <td class="t-right"><input type="text" name="level"></td>
+                </tr>
+                <tr align="center"><!--第一行-->
+                    <td colspan="2">
+                        <button onclick="register()">提交</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <!--右容器  -->
+
+</div>
+
+</body>
+<script>
+    function register() {
+        var sname = $("#name").val();
+        var phone = $("#username").val();
+        var email = $("#password").val();
+        var dept = $("#passwordTwo").val();
+        var post = $("#address").val();
+        var level = $("#phone").val();
+        $.post("/staff/addStaff",{sname:sname,phone:phone,email:email,dept:dept,post:post,level:level},function (res) {
+            if (res ==true){
+                alert("入职成功！");
+                window.location.href ="/staff/list";
+            } else {
+                alert("信息填写失败，请检查数据重试");
+            }
+        })
+    }
+
+    function getDepts(){
+        $.ajax({
+            url : "/dept/list",
+            async : false,
+            type : "GET",
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            // data : ,
+            dataType: 'json',
+            cache : false,
+            success: function(result){
+                if (result.success){
+                    var maps=JSON.parse(result.data);
+                    var length=maps.length;
+                    $("#dept").empty();
+                    $("#dept").prepend("<option value=''>请选择</option>");
+                    for(var i=0;i<length;i++){
+                        var map=maps[i];
+                        console.log(map.dname)
+                        $("#dept").append("<option >"+map.dname+"</option>");
+                    }
+                }else{
+                    alert("提示：操作失败！");
+                }
+            }
+        });
+    }
+
+    function getPosts(){
+        $.ajax({
+            url : "/post/list",
+            async : false,
+            type : "GET",
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            // data : ,
+            dataType: 'json',
+            cache : false,
+            success: function(result){
+                if (result.success){
+                    var maps=JSON.parse(result.data);
+                    var length=maps.length;
+                    $("#parentId2").empty();
+                    $("#parentId2").prepend("<option value=''>请选择</option>");
+                    for(var i=0;i<length;i++){
+                        var map=maps[i];
+                        console.log(map.pname)
+                        $("#parentId2").append("<option >"+map.pname+"</option>");
+                    }
+                }else{
+                    alert("提示：操作失败！");
+                }
+            }
+        });
+    }
+</script>
+</html>
