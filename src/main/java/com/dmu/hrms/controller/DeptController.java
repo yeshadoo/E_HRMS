@@ -1,6 +1,7 @@
 package com.dmu.hrms.controller;
 
 import com.dmu.hrms.entity.Dept;
+import com.dmu.hrms.entity.Post;
 import com.dmu.hrms.service.DeptService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,6 +48,7 @@ public class DeptController {
                 for(int i=0;i<depts.size();i++) {
                     JSONObject jsonObject=new JSONObject();
                     Dept dept=depts.get(i);
+                    jsonObject.put("id", dept.getId());
                     jsonObject.put("dname", dept.getDname());
 
                     jsonArray.put(jsonObject);
@@ -62,5 +64,11 @@ public class DeptController {
         }
 
         return map;
+    }
+    @RequestMapping("/listAll")
+    public String listAll(Model model){
+        List<Dept> depts = deptService.selectAll();
+        model.addAttribute("depts",depts);
+        return "deptList";
     }
 }

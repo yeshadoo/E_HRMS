@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>员工信息展示 </title>
+    <title>入职信息审批 </title>
     <meta name="description" content="AdminLTE2定制版">
     <meta name="keywords" content="AdminLTE2定制版">
 
@@ -84,13 +84,13 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                部门管理 <small></small>
+                员工入职信息审批 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/index.jsp"><i
                         class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a
-                        href="/patient/list">部门管理</a></li>
+                        href="/patient/list">入职审批</a></li>
 
 
             </ol>
@@ -141,21 +141,29 @@
                                class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
-                                <th class="text-center" >id</th>
-                                <th class="text-center" >岗位名</th>
+                                <th class="text-center" >姓名</th>
+                                <th class="text-center" >电话号</th>
+                                <th class="text-center">邮箱</th>
+                                <th class="text-center">部门</th>
+                                <th class="text-center">岗位</th>
+                                <th class="text-center">职级</th>
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr th:each="dept:${depts}">
-                                <td class="text-center" th:text="${dept.getId()}"></td>
-                                <td class="text-center"th:text="${dept.getDname()}"></td>
+                            <tr th:each="staff:${staffList}">
+
+                                <td class="text-center" th:text="${staff.getSname()}"></td>
+                                <td class="text-center"th:text="${staff.getPhone()}"></td>
+                                <td class="text-center"th:text="${staff.getEmail()}"></td>
+                                <td class="text-center"th:text="${staff.getDept().getDname()}"></td>
+                                <td class="text-center"th:text="${staff.getPost().getPname()}"></td>
                                 <!--                                <td class="text-center"th:text="${#dates.format(patient.getOnsetDate(),'yyyy-MM-dd')}"></td>-->
+                                <td class="text-center"th:text="${staff.getLevel()}"></td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-info" th:onclick="|detail(${dept.getId()})|">员工情况</button>
-                                    <button type="button" class="btn btn-warning" th:onclick="|update(${dept.getId()})|">修改部门</button>
-                                    <button type="button" class="btn btn-danger" th:onclick="|deleteDept(${dept.getId()})|">删除部门</button>
+                                    <button type="button" class="btn btn-success" th:onclick="|updateStatus('${staff.getId()}','正式')|">同意</button>
+                                    <button type="button" class="btn btn-danger" th:onclick="|updateStatus('${staff.getId()}','拒绝入职')|">拒绝</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -228,22 +236,13 @@
 <script th:src="@{/plugins/bootstrap-slider/bootstrap-slider.js}"></script>
 <script>
 
-    function update(id) {
-        location.href = "/dept/update/"
-            + id;
-
-    }
-    function detail(id) {
-        location.href = "/staff/listByDept/"
-            + id;
+    function updateStatus(id,status) {
+        location.href = "/staff/updateStatus/"
+            + id + "/" + status;
 
     }
 
-    function deleteDept(id) {
-        location.href = "/post/delete/"
-            + id;
 
-    }
     function changePageSize() {
         //获取下拉框的值
         var pageSize = $("#changePageSize").val();

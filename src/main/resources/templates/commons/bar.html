@@ -76,33 +76,32 @@
                     class="fa fa-dashboard"></i> <span>首页</span></a></li>
 
 
-            <li sec:authorize="hasRole('admin')" class="treeview"><a href="/staff/list"> <i class="fa fa-cogs"></i>
+            <li sec:authorize="hasRole('admin')" ><a href="/staff/list"> <i class="fa fa-calculator"></i>
                 <span>员工信息查询</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
+                        ></i>
 				</span>
 
             </a>
             </li>
 
-            <li class="treeview"><a href="/info/list"> <i class="fa fa-cogs"></i>
-                <span>岗位管理</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
-				</span>
-
-            </a>
-            </li>
-
-
-            <li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
+            <li sec:authorize="hasRole('admin')"><a href="/dept/listAll"> <i class="fa fa-calendar"></i>
                 <span>部门管理</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
+                        ></i>
+				</span>
+
+            </a>
+            </li>
+            <li sec:authorize="hasRole('admin')"><a href="post/listAll"> <i class="fa fa-cogs"></i>
+                <span>岗位管理</span> <span class="pull-right-container"> <i
+                        ></i>
 				</span>
 
             </a>
             </li>
 
 
-            <li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
+
+            <li sec:authorize="hasRole('admin')"><a href="#"> <i class="fa fa-cogs"></i>
                 <span>员工调动</span> <span class="pull-right-container"> <i
                         class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -114,7 +113,7 @@
                     <li id="donation">
                         <!--<security:authorize access="hasRole('ADMIN')">-->
                         <a
-                                href="/manager/list/"> <i
+                                href="/staff/listByStatus/入职待审批"> <i
                                 class="fa fa-circle-o"></i> 入职管理
                         </a>
                         <!--</security:authorize>-->
@@ -153,9 +152,9 @@
                 </ul>
             </li>
 
-            <li class="treeview"><a href="/staff/goAddStaff"> <i class="fa fa-cogs"></i>
-                <span>新员工入职办理</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
+            <li sec:authorize="hasRole('user')"><a href="/staff/goAddStaff"> <i class="fa fa-cogs"></i>
+                <span>申请入职</span> <span class="pull-right-container"> <i
+                        ></i>
 				</span>
 
             </a>
@@ -185,7 +184,7 @@
             </a>
             </li>
 
-            <li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
+            <li sec:authorize="hasRole('admin')"><a href="#"> <i class="fa fa-cogs"></i>
                 <span>试用期管理</span> <span class="pull-right-container"> <i
                         class="fa fa-angle-left pull-right"></i>
 				</span>

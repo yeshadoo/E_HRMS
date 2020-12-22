@@ -159,7 +159,7 @@
                         <lable for="tel">岗位</lable>
                     </td>
                     <td class="t-right">
-                        <select  id="parentId2"></select>
+                        <select  id="post"></select>
                     </td>
                 </tr>
                 <tr><!--第一行-->
@@ -167,7 +167,7 @@
                         <lable for="tel">入职方式</lable>
                     </td>
                     <td>
-                        <select>
+                        <select id="status">
                             <option>人才库入职</option>
                             <option>实习生入职</option>
                             <option>普通入职</option>
@@ -176,7 +176,7 @@
                 </tr>
                 <tr><!--第一行-->
                     <td class="t-left">职级</td>
-                    <td class="t-right"><input type="text" name="level"></td>
+                    <td class="t-right"><input type="text" name="level" id="level"></td>
                 </tr>
                 <tr align="center"><!--第一行-->
                     <td colspan="2">
@@ -193,23 +193,8 @@
 
 </body>
 <script>
-    function register() {
-        var sname = $("#name").val();
-        var phone = $("#username").val();
-        var email = $("#password").val();
-        var dept = $("#passwordTwo").val();
-        var post = $("#address").val();
-        var level = $("#phone").val();
-        $.post("/staff/addStaff",{sname:sname,phone:phone,email:email,dept:dept,post:post,level:level},function (res) {
-            if (res ==true){
-                alert("入职成功！");
-                window.location.href ="/staff/list";
-            } else {
-                alert("信息填写失败，请检查数据重试");
-            }
-        })
-    }
-
+    var deptMaps
+    var postMaps
     function getDepts(){
         $.ajax({
             url : "/dept/list",
@@ -221,13 +206,12 @@
             cache : false,
             success: function(result){
                 if (result.success){
-                    var maps=JSON.parse(result.data);
-                    var length=maps.length;
+                    deptMaps=JSON.parse(result.data);
+                    var length=deptMaps.length;
                     $("#dept").empty();
                     $("#dept").prepend("<option value=''>请选择</option>");
                     for(var i=0;i<length;i++){
-                        var map=maps[i];
-                        console.log(map.dname)
+                        var map=deptMaps[i];
                         $("#dept").append("<option >"+map.dname+"</option>");
                     }
                 }else{
@@ -248,14 +232,13 @@
             cache : false,
             success: function(result){
                 if (result.success){
-                    var maps=JSON.parse(result.data);
-                    var length=maps.length;
-                    $("#parentId2").empty();
-                    $("#parentId2").prepend("<option value=''>请选择</option>");
+                    postMaps=JSON.parse(result.data);
+                    var length=postMaps.length;
+                    $("#post").empty();
+                    $("#post").prepend("<option value=''>请选择</option>");
                     for(var i=0;i<length;i++){
-                        var map=maps[i];
-                        console.log(map.pname)
-                        $("#parentId2").append("<option >"+map.pname+"</option>");
+                        var map=postMaps[i];
+                        $("#post").append("<option >"+map.pname+"</option>");
                     }
                 }else{
                     alert("提示：操作失败！");
@@ -263,5 +246,45 @@
             }
         });
     }
+    function register() {
+        var sname = $("#sname").val();
+        var phone = $("#phone").val();
+        var email = $("#email").val();
+        var dept = $("#dept").val();
+        var dept_id;
+        var post = $("#post").val();
+        var post_id;
+        var status = "入职待审批";
+        var level = $("#level").val();
+
+//根据部门名、岗位名分别查找出对应的id，然后作为外键插入
+
+
+        for(var i=0;i<deptMaps.length;i++){
+            var deptmap=deptMaps[i];
+            if(dept === deptmap.dname){
+                dept_id = deptmap.id
+            }
+        }
+
+        for(var i=0;i<postMaps.length;i++){
+            var postmap=postMaps[i];
+            if(post === postmap.pname){
+                post_id = postmap.id
+            }
+        }
+
+        $.post("/staff/addStaff",{sname:sname,phone:phone,email:email,deptId:dept_id,postId:post_id,status:status,level:level},function (res) {
+            if (res == true){
+                alert("上报成功，等待hr审批~");
+                window.location.href ="/staff/list";
+            } else {
+                alert("信息填写失败，请检查数据重试");
+            }
+        })
+
+    }
+
+
 </script>
 </html>

@@ -60,7 +60,7 @@ public class UserController {
     @ResponseBody
     public boolean register(User user) {
         //新注册用户默认权限为user
-        user.setRole("user");
+        user.setRole("ROLE_user");
 
         //对密码进行加密存储
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));

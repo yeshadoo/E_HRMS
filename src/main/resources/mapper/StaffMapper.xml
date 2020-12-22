@@ -45,4 +45,24 @@
     select id, sname, phone, email, dept_id, post_id, status, level
     from staff
   </select>
+  <select id="selectByDept" resultMap="BaseResultMap">
+    select id, sname, phone, email, dept_id, post_id, status, level
+    from staff
+    where dept_id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPost" resultMap="BaseResultMap">
+    select id, sname, phone, email, dept_id, post_id, status, level
+    from staff
+    where post_id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByStatus" resultMap="BaseResultMap">
+    select id, sname, phone, email, dept_id, post_id, status, level
+        from staff
+    where status = #{status,jdbcType=VARCHAR}
+  </select>
+  <update id="updateStatus">
+    update staff
+    set status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

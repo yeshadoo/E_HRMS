@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,6 +38,7 @@ public class PostController {
                 for(int i=0;i<posts.size();i++) {
                     JSONObject jsonObject=new JSONObject();
                     Post post = posts.get(i);
+                    jsonObject.put("id", post.getId());
                     jsonObject.put("pname", post.getPname());
 
                     jsonArray.put(jsonObject);
@@ -52,5 +54,12 @@ public class PostController {
         }
 
         return map;
+    }
+
+    @RequestMapping("/listAll")
+    public String listAll(Model model){
+        List<Post> posts = postService.selectAll();
+        model.addAttribute("posts",posts);
+        return "postList";
     }
 }

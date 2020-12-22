@@ -13,4 +13,13 @@ public interface StaffService {
     List<Staff> selectAll();
 
     int insert(Staff staff);
+
+    List<Staff> selectByDept(Integer deptId);
+
+    List<Staff> selectByPost(Integer postId);
+
+    List<Staff> selectByStatus(String status);
+
+    void updateStatus(Integer id,String param);
+
 }

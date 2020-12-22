@@ -27,4 +27,25 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> selectAll() {
         return staffMapper.selectAll();
     }
+
+
+    @Override
+    public List<Staff> selectByDept(Integer postId) {
+        return staffMapper.selectByDept(postId);
+    }
+
+    @Override
+    public List<Staff> selectByPost(Integer deptId) {
+        return staffMapper.selectByPost(deptId);
+    }
+
+    @Override
+    public List<Staff> selectByStatus(String status) {
+        return staffMapper.selectByStatus(status);
+    }
+
+    @Override
+    public void updateStatus(Integer id, String param) {
+        staffMapper.updateStatus(id,param);
+    }
 }
