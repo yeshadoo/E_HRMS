@@ -124,7 +124,7 @@
                     <li id="system-setting3">
                         <!--<security:authorize access="hasRole('ADMIN')">-->
                         <a
-                                href="/manager/list/"> <i
+                                href="/staff/listByStatus/离职待审批"> <i
                                 class="fa fa-circle-o"></i> 离职管理
                         </a>
                         <!--</security:authorize>-->
@@ -160,7 +160,7 @@
             </a>
             </li>
 
-            <li sec:authorize="hasRole('user')" class="treeview"><a href="/info/list"> <i class="fa fa-cogs"></i>
+            <li sec:authorize="hasRole('user')" class="treeview"><a href="/staff/goLeave"> <i class="fa fa-cogs"></i>
                 <span>申请离职</span> <span class="pull-right-container"> <i
                         class="fa fa-angle-left pull-right"></i>
 				</span>

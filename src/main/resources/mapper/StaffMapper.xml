@@ -62,7 +62,12 @@
   </select>
   <update id="updateStatus">
     update staff
-    set status = #{status,jdbcType=VARCHAR}
+    set status = #{param,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectBySname" resultType="com.dmu.hrms.entity.Staff">
+    select id, sname, phone, email, dept_id, post_id, status, level
+        from staff
+    where sname = #{sname,jdbcType=VARCHAR}
+  </select>
 </mapper>

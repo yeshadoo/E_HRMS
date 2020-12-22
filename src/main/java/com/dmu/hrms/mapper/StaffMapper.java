@@ -1,6 +1,7 @@
 package com.dmu.hrms.mapper;
 
 import com.dmu.hrms.entity.Staff;
+import org.apache.ibatis.annotations.Param;
 import org.omg.CORBA.INTERNAL;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public interface StaffMapper {
     List<Staff> selectByPost(Integer postId);
 
     List<Staff> selectByStatus(String status);
+    Staff selectBySname(String sname);
 
-    void updateStatus(Integer id,String param);
+    void updateStatus(@Param("id") Integer id, @Param("param") String param);
+
+
 }

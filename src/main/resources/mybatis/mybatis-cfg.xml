@@ -21,6 +21,7 @@
         <mapper resource="mapper/StaffMapper.xml" />
         <mapper resource="mapper/DeptMapper.xml" />
         <mapper resource="mapper/PostMapper.xml" />
+        <mapper resource="mapper/LeaveMapper.xml" />
     </mappers>
 </configuration>
 

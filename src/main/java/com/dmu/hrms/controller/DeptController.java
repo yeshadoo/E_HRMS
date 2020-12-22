@@ -38,7 +38,7 @@ public class DeptController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public Map<String,Object> getDepts(HttpServletRequest request){
+    public Map<String,Object> getDepts(){
 
         Map<String, Object> map = new HashMap<>();
         try {

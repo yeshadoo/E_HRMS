@@ -19,6 +19,7 @@ public interface StaffService {
     List<Staff> selectByPost(Integer postId);
 
     List<Staff> selectByStatus(String status);
+    Staff selectBySname(String sname);
 
     void updateStatus(Integer id,String param);
 

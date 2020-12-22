@@ -48,4 +48,9 @@ public class StaffServiceImpl implements StaffService {
     public void updateStatus(Integer id, String param) {
         staffMapper.updateStatus(id,param);
     }
+
+    @Override
+    public Staff selectBySname(String sname) {
+        return staffMapper.selectBySname(sname);
+    }
 }

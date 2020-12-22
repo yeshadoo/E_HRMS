@@ -111,12 +111,12 @@
 </head>
 <script type="text/javascript"src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
-<body onload="getDepts(),getPosts()">
+<body>
 <!--最外层容器-->
 <div>
     <!--左容器-->
     <div class="left">
-        <p class="first">入职信息填写</p>
+        <p class="first">离职信息填写</p>
         <p class="third">user register</p>
     </div>
     <!--中容器  插入表格容器-->
@@ -133,52 +133,19 @@
                 </tr>
                 <tr><!--第2行-->
                     <td class="t-left">
-                        <lable for="password">电话</lable>
+                        <lable for="password">离职日期</lable>
                     </td>
-                    <td class="t-right"><input type="text" name="phone" id="phone" placeholder="请输入手机号">
+                    <td class="t-right"><input type="date"  id="leave_date" placeholder="请选择离职日期">
                     </td>
                 </tr>
                 <tr><!--第2行-->
                     <td class="t-left">
-                        <lable for="password">邮箱</lable>
+                        <lable for="password">离职原因</lable>
                     </td>
-                    <td class="t-right"><input type="text" name="email" id="email" placeholder="请输入邮箱">
+                    <td class="t-right"><input type="text" name="leave_reason" id="leave_reason" placeholder="请输入离职原因">
                     </td>
                 </tr>
-                <tr >
-                    <td class="t-left">
-                        <lable for="email">部门</lable>
-                    </td>
-                    <td class="t-right">
-                        <select  id="dept"></select>
-                    </td>
 
-                </tr>
-                <tr><!--第一行-->
-                    <td class="t-left">
-                        <lable for="tel">岗位</lable>
-                    </td>
-                    <td class="t-right">
-                        <select  id="post"></select>
-                    </td>
-                </tr>
-                <tr><!--第一行-->
-                    <td class="t-left">
-                        <lable for="tel">入职方式</lable>
-                    </td>
-                    <td>
-                        <select id="status">
-                            <option>请选择</option>
-                            <option>人才库入职</option>
-                            <option>实习生入职</option>
-                            <option>普通入职</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr><!--第一行-->
-                    <td class="t-left">职级</td>
-                    <td class="t-right"><input type="text" name="level" id="level"></td>
-                </tr>
                 <tr align="center"><!--第一行-->
                     <td colspan="2">
                         <button onclick="register()">提交</button>
@@ -194,95 +161,56 @@
 
 </body>
 <script>
-    var deptMaps
-    var postMaps
-    function getDepts(){
+    var staffMaps
+    var sname
+
+
+    function getStaffIdBySname(sname) {
+        var staff_id = null
         $.ajax({
-            url : "/dept/list",
-            async : false,
-            type : "GET",
+            url: "/staff/selectBySname/" + sname,
+            async: false,
+            type: "GET",
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             // data : ,
             dataType: 'json',
-            cache : false,
-            success: function(result){
-                if (result.success){
-                    deptMaps=JSON.parse(result.data);
-                    var length=deptMaps.length;
-                    $("#dept").empty();
-                    $("#dept").prepend("<option value=''>请选择</option>");
-                    for(var i=0;i<length;i++){
-                        var map=deptMaps[i];
-                        $("#dept").append("<option >"+map.dname+"</option>");
-                    }
-                }else{
-                    alert("提示：操作失败！");
+            cache: false,
+            success: function (result) {
+                if (result.success) {
+                    staffMaps = result.data;
+                    staff_id = staffMaps[0].staff_id;
+                    console.log(staff_id)
+                } else {
+                    alert("提示：获取员工信息失败！");
                 }
             }
         });
+        return staff_id
     }
 
-    function getPosts(){
-        $.ajax({
-            url : "/post/list",
-            async : false,
-            type : "GET",
-            contentType: "application/x-www-form-urlencoded; charset=utf-8",
-            // data : ,
-            dataType: 'json',
-            cache : false,
-            success: function(result){
-                if (result.success){
-                    postMaps=JSON.parse(result.data);
-                    var length=postMaps.length;
-                    $("#post").empty();
-                    $("#post").prepend("<option value=''>请选择</option>");
-                    for(var i=0;i<length;i++){
-                        var map=postMaps[i];
-                        $("#post").append("<option >"+map.pname+"</option>");
-                    }
-                }else{
-                    alert("提示：操作失败！");
-                }
-            }
-        });
-    }
+
     function register() {
-        var sname = $("#sname").val();
-        var phone = $("#phone").val();
-        var email = $("#email").val();
-        var dept = $("#dept").val();
-        var dept_id;
-        var post = $("#post").val();
-        var post_id;
-        var status = "入职待审批";
-        var level = $("#level").val();
-
-//根据部门名、岗位名分别查找出对应的id，然后作为外键插入
+        sname = $("#sname").val();
+        var sid = getStaffIdBySname(sname)
+        var leave_date = $("#leave_date").val();
+        console.log(leave_date)
+        var leave_reason = $("#leave_reason").val();
+        var status = "离职待审批";
 
 
-        for(var i=0;i<deptMaps.length;i++){
-            var deptmap=deptMaps[i];
-            if(dept === deptmap.dname){
-                dept_id = deptmap.id
-            }
-        }
-
-        for(var i=0;i<postMaps.length;i++){
-            var postmap=postMaps[i];
-            if(post === postmap.pname){
-                post_id = postmap.id
-            }
-        }
-
-        $.post("/staff/addStaff",{sname:sname,phone:phone,email:email,deptId:dept_id,postId:post_id,status:status,level:level},function (res) {
-            if (res == true){
-                alert("上报成功，等待hr审批~");
-                window.location.href ="/staff/list";
-            } else {
-                alert("信息填写失败，请检查数据重试");
-            }
+        console.log(sid)
+        console.log(leave_reason)
+        $.post("/leave/addLeave",{staffId:parseInt(sid),sname:sname,leaveDate:leave_date.toString(),leaveReason:leave_reason,status:status},function (res) {
+            $.post("/staff/updateStatus",{id:sid,status:status},function (res) {
+                if (res == true){
+                    alert("上报成功，等待hr审批~");
+                    window.location.href ="/staff/list";
+                } else {
+                    alert("信息填写失败，请检查数据重试");
+                }
+            })
         })
+
 
     }
 

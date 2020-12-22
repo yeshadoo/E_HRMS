@@ -1,7 +1,11 @@
 package com.dmu.hrms.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.dmu.hrms.entity.Post;
 import com.dmu.hrms.entity.Staff;
 import com.dmu.hrms.service.StaffService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author : hadoo
@@ -39,7 +44,6 @@ public class StaffController {
     @PostMapping("/addStaff")
     @ResponseBody
     public Boolean addStaff(Staff staff){
-        System.out.println(staff.toString());
         staffService.insert(staff);
         return true;
     }
@@ -62,12 +66,49 @@ public class StaffController {
     public String listByStatus(@PathVariable String status,Model model){
         List<Staff> staffs = staffService.selectByStatus(status);
         model.addAttribute("staffList",staffs);
+        if("入职待审批".equals(status)){
+            return "entryList";
+        }
+        else if("离职待审批".equals(status)){
+           return "leaveList";
+        }
+        return "index";
+    }
+    @RequestMapping("/updateStatus/{id}/{status}")
+    public String updateInfo(@PathVariable("id") Integer id,@PathVariable("status") String status) throws UnsupportedEncodingException {
+        staffService.updateStatus(id,status);
         return "entryList";
     }
-    @RequestMapping("/update/{id}/{status}")
-    public String updateInfo(@PathVariable Integer id,@PathVariable String status) throws UnsupportedEncodingException {
-        String decodeStatus = URLDecoder.decode(status, "UTF-8");
-        staffService.updateStatus(id,decodeStatus);
-        return "entryList";
+
+    @RequestMapping("/goLeave")
+    public String goLeave(){
+        return "leaveAdd";
+    }
+
+    @RequestMapping("/selectBySname/{sname}")
+    @ResponseBody
+    public Map<String, Object> selectBySname(@PathVariable String sname){
+        Map<String, Object> map = new HashMap<>();
+        try {
+            JSONArray jsonArray=new JSONArray();
+            Staff staff = staffService.selectBySname(sname);
+            System.out.println(staff);
+            if(null!=staff) {
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.put("staff_id", staff.getId());
+                jsonArray.add(jsonObject);
+            }
+            System.out.println(jsonArray.toString());
+            map.put("success",true);
+            map.put("msg","操作成功");
+            map.put("data",jsonArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+            map.put("success",false);
+            map.put("msg","操作失败!");
+        }
+
+        return map;
+
     }
 }
