@@ -6,6 +6,8 @@ import com.dmu.hrms.service.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author : hadoo
  * @Date : 2020/12/22 10:51
@@ -18,5 +20,15 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public int insert(Leave leave) {
         return leaveMapper.insert(leave);
+    }
+
+    @Override
+    public List<Leave> selectAll() {
+        return leaveMapper.selectAll();
+    }
+
+    @Override
+    public List<Leave> selectByStatus(String status) {
+        return leaveMapper.selectByStatus(status);
     }
 }

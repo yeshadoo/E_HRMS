@@ -66,13 +66,8 @@ public class StaffController {
     public String listByStatus(@PathVariable String status,Model model){
         List<Staff> staffs = staffService.selectByStatus(status);
         model.addAttribute("staffList",staffs);
-        if("入职待审批".equals(status)){
-            return "entryList";
-        }
-        else if("离职待审批".equals(status)){
-           return "leaveList";
-        }
-        return "index";
+        return "entryList";
+
     }
     @RequestMapping("/updateStatus/{id}/{status}")
     public String updateInfo(@PathVariable("id") Integer id,@PathVariable("status") String status) throws UnsupportedEncodingException {

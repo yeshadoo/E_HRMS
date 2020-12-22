@@ -66,7 +66,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectBySname" resultType="com.dmu.hrms.entity.Staff">
-    select id, sname, phone, email, dept_id, post_id, status, level
+    select id, sname, phone, email, dept_id deptId, post_id postId, status, level
         from staff
     where sname = #{sname,jdbcType=VARCHAR}
   </select>

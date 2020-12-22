@@ -61,14 +61,6 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-<script>
-    function updateStatus(id,status) {
-        console.log(status)
-        location.href = "/staff/updateStatus/"
-            + id + "/" + status;
-
-    }
-</script>
 
 <div class="wrapper">
 
@@ -244,8 +236,13 @@
 <script th:src="@{/plugins/bootstrap-slider/bootstrap-slider.js}"></script>
 <script>
 
-
-
+    function updateStatus(id,status) {
+        console.log(status)
+        location.href = "/staff/updateStatus/"
+            + id + "/" + status;
+        alert("已同意入职!");
+        window.location.href ="/index";
+    }
 
     function changePageSize() {
         //获取下拉框的值

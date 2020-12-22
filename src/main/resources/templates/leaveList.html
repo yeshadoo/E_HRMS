@@ -61,14 +61,6 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-<script>
-    function updateStatus(id,status) {
-        console.log(status)
-        location.href = "/staff/updateStatus/"
-            + id + "/" + status;
-
-    }
-</script>
 
 <div class="wrapper">
 
@@ -150,8 +142,8 @@
                             <thead>
                             <tr>
                                 <th class="text-center" >姓名</th>
-                                <th class="text-center">当前部门</th>
-                                <th class="text-center">岗位</th>
+                                <th class="text-center">手机号</th>
+                                <th class="text-center">邮箱</th>
                                 <th class="text-center">职级</th>
                                 <th class="text-center">离职日期</th>
                                 <th class="text-center">离职原因</th>
@@ -160,18 +152,17 @@
                             </thead>
                             <tbody>
 
-                            <tr th:each="staff:${staffList}">
+                            <tr th:each="leave:${leaves}">
 
-                                <td class="text-center" th:text="${staff.getSname()}"></td>
-                                <td class="text-center"th:text="${staff.getDept().getDname()}"></td>
-                                <td class="text-center"th:text="${staff.getPost().getPname()}"></td>
-                                <!--                                <td class="text-center"th:text="${#dates.format(patient.getOnsetDate(),'yyyy-MM-dd')}"></td>-->
-                                <td class="text-center"th:text="${staff.getLevel()}"></td>
-                                <td class="text-center"th:text="${staff.getLeave().getLeaveDate()}"></td>
-                                <td class="text-center"th:text="${staff.getLeave().getLeaveReason()}"></td>
+                                <td class="text-center" th:text="${leave.getSname()}"></td>
+                                <td class="text-center"th:text="${leave.getStaff().getPhone()}"></td>
+                                <td class="text-center"th:text="${leave.getStaff().getEmail()}"></td>
+                                <td class="text-center"th:text="${leave.getStaff().getLevel()}"></td>
+                                <td class="text-center"th:text="${leave.getLeaveDate()}"></td>
+                                <td class="text-center"th:text="${leave.getLeaveReason()}"></td>l
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-success" th:onclick="|updateStatus('${staff.getId()}','已离职')|">同意</button>
-                                    <button type="button" class="btn btn-danger" th:onclick="|updateStatus('${staff.getId()}','拒绝离职')|">拒绝</button>
+                                    <button type="button" class="btn btn-success" th:onclick="|updateStatus('${leave.getStaffId()','已离职')|">同意</button>
+                                    <button type="button" class="btn btn-danger" th:onclick="|updateStatus('${leave.getStaffId()}','拒绝离职')|">拒绝</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -244,8 +235,14 @@
 <script th:src="@{/plugins/bootstrap-slider/bootstrap-slider.js}"></script>
 <script>
 
+    function updateStatus(id,status) {
+        console.log(id + status)
+        location.href = "/staff/updateStatus/"
+            + id + "/" + status;
+        alert("已同意离职!");
+        window.location.href ="/index";
 
-
+    }
 
     function changePageSize() {
         //获取下拉框的值

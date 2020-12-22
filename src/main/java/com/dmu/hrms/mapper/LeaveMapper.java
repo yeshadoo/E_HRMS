@@ -10,6 +10,8 @@ public interface LeaveMapper {
 
     Leave selectByPrimaryKey(Integer id);
 
+    List<Leave> selectByStatus(String status);
+
     List<Leave> selectAll();
 
     int updateByPrimaryKey(Leave record);

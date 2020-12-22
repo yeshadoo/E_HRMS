@@ -11,16 +11,16 @@
     <association property="staff" select="com.dmu.hrms.mapper.StaffMapper.selectBySname" column="sname" javaType="com.dmu.hrms.entity.Staff"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from leave
+    delete from leaves
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.dmu.hrms.entity.Leave">
-    insert into leave (id, staff_id, sname, leave_date, leave_reason, status)
-    values (#{id,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, 
-      #{leaveDate,jdbcType=VARCHAR}, #{leaveReason,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+    insert into leaves (id, staff_id, sname, leave_date, leave_reason, status)
+    values (#{id,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR},
+    #{leaveDate,jdbcType=VARCHAR}, #{leaveReason,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.dmu.hrms.entity.Leave">
-    update leave
+    update leaves
     set staff_id = #{staffId,jdbcType=INTEGER},
       sname = #{sname,jdbcType=VARCHAR},
       leave_date = #{leaveDate,jdbcType=VARCHAR},
@@ -30,12 +30,18 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, staff_id, sname, leave_date, leave_reason, status
-    from leave
+    from leaves
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, staff_id, sname, leave_date, leave_reason, status
-    from leave
+    from leaves
+  </select>
+
+  <select id="selectByStatus" resultMap="BaseResultMap">
+    select id, staff_id, sname, leave_date, leave_reason, status
+    from leaves
+    where status = #{status,jdbcType=VARCHAR}
   </select>
 
 </mapper>

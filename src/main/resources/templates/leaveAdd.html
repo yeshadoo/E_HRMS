@@ -200,18 +200,14 @@
 
         console.log(sid)
         console.log(leave_reason)
-        $.post("/leave/addLeave",{staffId:parseInt(sid),sname:sname,leaveDate:leave_date.toString(),leaveReason:leave_reason,status:status},function (res) {
-            $.post("/staff/updateStatus",{id:sid,status:status},function (res) {
-                if (res == true){
-                    alert("上报成功，等待hr审批~");
-                    window.location.href ="/staff/list";
-                } else {
-                    alert("信息填写失败，请检查数据重试");
-                }
-            })
+        $.post("/leave/addLeave",{staffId:sid,sname:sname,leaveDate:leave_date.toString(),leaveReason:leave_reason,status:status},function (res) {
+            console.log(res)
+        });
+
+        $.get("/staff/updateStatus/"+sid+"/"+status,function (res) {
+            alert("离职上报成功，等待hr审批~");
+            window.location.href ="/index";
         })
-
-
     }
 
 
