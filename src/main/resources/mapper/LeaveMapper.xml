@@ -37,11 +37,14 @@
     select id, staff_id, sname, leave_date, leave_reason, status
     from leaves
   </select>
-
   <select id="selectByStatus" resultMap="BaseResultMap">
     select id, staff_id, sname, leave_date, leave_reason, status
     from leaves
     where status = #{status,jdbcType=VARCHAR}
   </select>
-
+  <update id="updateStatus">
+    update leaves
+    set status = #{param,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

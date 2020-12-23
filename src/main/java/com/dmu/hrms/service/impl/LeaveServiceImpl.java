@@ -31,4 +31,9 @@ public class LeaveServiceImpl implements LeaveService {
     public List<Leave> selectByStatus(String status) {
         return leaveMapper.selectByStatus(status);
     }
+
+    @Override
+    public void updateStatus(Integer id, String param) {
+        leaveMapper.updateStatus(id,param);
+    }
 }

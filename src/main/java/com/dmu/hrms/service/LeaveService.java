@@ -14,4 +14,6 @@ public interface LeaveService {
     List<Leave> selectAll();
 
     List<Leave> selectByStatus(String status);
+
+    void updateStatus(Integer id,String param);
 }

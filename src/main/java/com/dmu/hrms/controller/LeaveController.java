@@ -39,10 +39,14 @@ public class LeaveController {
 
     @RequestMapping("/listByStatus/{status}")
     public String listByStatus(Model model, @PathVariable String status){
-        System.out.println(status);
         List<Leave> leaves = leaveService.selectByStatus(status);
-        System.out.println(leaves.get(0).toString());
         model.addAttribute("leaves",leaves);
+        return "leaveList";
+    }
+
+    @RequestMapping("/updateStatus/{id}/{status}")
+    public String updateInfo(@PathVariable("id") Integer id,@PathVariable("status") String status){
+        leaveService.updateStatus(id,status);
         return "leaveList";
     }
 }
