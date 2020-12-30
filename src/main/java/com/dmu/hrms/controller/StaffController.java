@@ -106,4 +106,14 @@ public class StaffController {
         return map;
 
     }
+
+    @RequestMapping("/goChangeDept")
+    public String goChangeDept(){
+        return "changeDept";
+    }
+
+    @RequestMapping("/test")
+    public String test(){
+        return "test";
+    }
 }

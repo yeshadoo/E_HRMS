@@ -155,7 +155,7 @@
                                 <td class="text-center">
                                     <button type="button" class="btn btn-info" th:onclick="|detail(${dept.getId()})|">员工情况</button>
                                     <button type="button" class="btn btn-warning" th:onclick="|update(${dept.getId()})|">修改部门</button>
-                                    <button type="button" class="btn btn-danger" th:onclick="|deleteDept(${dept.getId()})|">删除部门</button>
+                                    <button type="button" class="btn btn-danger" th:onclick="|a()|">删除部门</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -240,9 +240,18 @@
     }
 
     function deleteDept(id) {
-        location.href = "/post/delete/"
+        location.href = "/dept/delete/"
             + id;
 
+    }
+    function a(){
+        var b=confirm("该部门存在若干员工，确认删除？")//按确认和取消输出不同的内容
+        if(b==true){
+            document.write("you pressed ok!")
+//                f();
+        }else{
+//                    document.write("you pressed cancel!")
+        }
     }
     function changePageSize() {
         //获取下拉框的值

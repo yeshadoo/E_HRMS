@@ -84,13 +84,13 @@
         <!-- 内容头部 -->
         <section class="content-header">
             <h1>
-                岗位管理 <small></small>
+                试用期信息管理 <small></small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}/index.jsp"><i
                         class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a
-                        href="/patient/list">部门信息信息管理</a></li>
+                        href="/patient/list">试用期员工信息管理</a></li>
 
 
             </ol>
@@ -113,11 +113,11 @@
                         <div class="pull-left">
                             <div class="form-group form-inline">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default" title="新建" onclick="location.href='/patient/toAdd'">
+                                    <button type="button" class="btn btn-default" title="新建" onclick="location.href='/staff/goAddStaff'">
                                         <i class="fa fa-file-o"></i> 新建
                                     </button>
 
-                                    <button type="button" class="btn btn-default"onclick="location.href='/patient/list'" title="刷新">
+                                    <button type="button" class="btn btn-default"onclick="location.href='/staff/list'" title="刷新">
                                         <i class="fa fa-refresh"></i> 刷新
                                     </button>
                                 </div>
@@ -141,24 +141,29 @@
                                class="table table-bordered table-striped table-hover dataTable">
                             <thead>
                             <tr>
-                                <th class="text-center" >id</th>
-                                <th class="text-center" >岗位名</th>
+                                <th class="text-center" >姓名</th>
+                                <th class="text-center" >电话号</th>
+                                <th class="text-center">邮箱</th>
+                                <th class="text-center">部门</th>
+                                <th class="text-center">岗位</th>
+                                <th class="text-center">状态</th>
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr th:each="post:${posts}">
-
-                                <td class="text-center" th:text="${post.getId()}"></td>
-                                <td class="text-center"th:text="${post.getPname()}"></td>
-                                <!--                                <td class="text-center"th:text="${#dates.format(patient.getOnsetDate(),'yyyy-MM-dd')}"></td>-->
-                                                                <td class="text-center">
-                                                                    <button type="button" class="btn btn-info" th:onclick="|detail(${post.getId()})|">岗位员工</button>
-                                                                    <button type="button" class="btn btn-warning" th:onclick="|update(${post.getId()})|">修改岗位</button>
-                                                                    <button type="button" class="btn btn-danger" th:onclick="|a()|">删除岗位</button>
-                                                                </td>
-                            </tr>
+                            <td class="text-center" th:text="dong"></td>
+                            <td class="text-center"th:text="333"></td>
+                            <td class="text-center"th:text="333"></td>
+                            <td class="text-center"th:text="广告部"></td>
+                            <td class="text-center"th:text="开发"></td>
+                            <td class="text-center"th:text="试用期"></td>
+                            <!--                                <td class="text-center"th:text="${#dates.format(patient.getOnsetDate(),'yyyy-MM-dd')}"></td>-->
+                            <td class="text-center">
+                                <button type="button" class="btn btn-info">转正</button>
+                                <button type="button" class="btn btn-success">延期</button>
+                                <button type="button" class="btn btn-danger">不通过</button>
+                            </td>
                             </tbody>
 
 
@@ -170,7 +175,6 @@
 
                 </div>
                 </box-body>
-
 
             </div>
 
@@ -229,31 +233,6 @@
 <script th:src="@{/plugins/bootstrap-slider/bootstrap-slider.js}"></script>
 <script>
 
-    function update(id) {
-        location.href = "/post/update/"
-            + id;
-
-    }
-    function detail(id) {
-        location.href = "/staff/listByPost/"
-            + id;
-
-    }
-
-    function deleteDept(id) {
-            location.href = "/post/delete/"
-                + id;
-
-    }
-    function a(){
-        var b=confirm("该岗位存在若干员工，确认删除？")//按确认和取消输出不同的内容
-        if(b==true){
-            document.write("you pressed ok!")
-//                f();
-        }else{
-//                    document.write("you pressed cancel!")
-        }
-    }
     function changePageSize() {
         //获取下拉框的值
         var pageSize = $("#changePageSize").val();

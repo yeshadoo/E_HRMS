@@ -135,21 +135,21 @@
                         <!--<security:authorize access="hasRole('ADMIN')">-->
                         <a
                                 href="/manager/list/"> <i
-                                class="fa fa-circle-o"></i> 部门调动
+                                class="fa fa-circle-o"></i> 调动管理
                         </a>
                         <!--</security:authorize>-->
                     </li>
                 </ul>
-                <ul class="treeview-menu">
-                    <li id="changePost">
-                        <!--<security:authorize access="hasRole('ADMIN')">-->
-                        <a
-                                href="/manager/list/"> <i
-                                class="fa fa-circle-o"></i> 岗位调动
-                        </a>
-                        <!--</security:authorize>-->
-                    </li>
-                </ul>
+<!--                <ul class="treeview-menu">-->
+<!--                    <li id="changePost">-->
+<!--                        &lt;!&ndash;<security:authorize access="hasRole('ADMIN')">&ndash;&gt;-->
+<!--                        <a-->
+<!--                                href="/manager/list/"> <i-->
+<!--                                class="fa fa-circle-o"></i> 岗位调动-->
+<!--                        </a>-->
+<!--                        &lt;!&ndash;</security:authorize>&ndash;&gt;-->
+<!--                    </li>-->
+<!--                </ul>-->
             </li>
 
             <li sec:authorize="hasRole('user')"><a href="/staff/goAddStaff"> <i class="fa fa-cogs"></i>
@@ -168,25 +168,17 @@
             </a>
             </li>
 
-            <li sec:authorize="hasRole('user')" class="treeview"><a href="/info/list"> <i class="fa fa-cogs"></i>
-                <span>申请转岗</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
+            <li sec:authorize="hasRole('user')" class="treeview"><a href="/staff/goChangeDept"> <i class="fa fa-cogs"></i>
+                <span>申请调动</span> <span class="pull-right-container"> <i
+                        ></i>
 				</span>
 
             </a>
             </li>
 
-            <li sec:authorize="hasRole('user')" class="treeview"><a href="/info/list"> <i class="fa fa-cogs"></i>
-                <span>申请转部门</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
-				</span>
-
-            </a>
-            </li>
-
-            <li sec:authorize="hasRole('admin')"><a href="#"> <i class="fa fa-cogs"></i>
+            <li sec:authorize="hasRole('admin')"><a href="/staff/test"> <i class="fa fa-cogs"></i>
                 <span>试用期管理</span> <span class="pull-right-container"> <i
-                        class="fa fa-angle-left pull-right"></i>
+                       ></i>
 				</span>
 
             </a>

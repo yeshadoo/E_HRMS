@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>入职信息填写</title>
+    <title>调用员工信息填写</title>
     <!--分析；在body中设置背景，插入一个table 或者div ，分为三部分，三部分都浮动，按照百分比来分（或者拿尺子测下像素）
     左边是p标签，右边是a标签嵌套p标签
     中间是注册表单
@@ -116,7 +116,7 @@
 <div>
     <!--左容器-->
     <div class="left">
-        <p class="first">入职信息填写</p>
+        <p class="first">调动员工信息填写</p>
         <p class="third">user register</p>
     </div>
     <!--中容器  插入表格容器-->
@@ -131,23 +131,9 @@
                     </td>
                     <td class="t-right"><input type="text" name="sname" id="sname" placeholder="请输入姓名"></td>
                 </tr>
-                <tr><!--第2行-->
-                    <td class="t-left">
-                        <lable for="password">电话</lable>
-                    </td>
-                    <td class="t-right"><input type="text" name="phone" id="phone" placeholder="请输入手机号">
-                    </td>
-                </tr>
-                <tr><!--第2行-->
-                    <td class="t-left">
-                        <lable for="password">邮箱</lable>
-                    </td>
-                    <td class="t-right"><input type="text" name="email" id="email" placeholder="请输入邮箱">
-                    </td>
-                </tr>
                 <tr >
                     <td class="t-left">
-                        <lable for="email">部门</lable>
+                        <lable for="email">当前部门</lable>
                     </td>
                     <td class="t-right">
                         <select  id="dept"></select>
@@ -156,29 +142,30 @@
                 </tr>
                 <tr><!--第一行-->
                     <td class="t-left">
-                        <lable for="tel">岗位</lable>
+                        <lable for="tel">当前岗位</lable>
                     </td>
                     <td class="t-right">
                         <select  id="post"></select>
                     </td>
                 </tr>
+                <tr >
+                    <td class="t-left">
+                        <lable for="email">目标部门</lable>
+                    </td>
+                    <td class="t-right">
+                        <select  id="dept1"></select>
+                    </td>
+
+                </tr>
                 <tr><!--第一行-->
                     <td class="t-left">
-                        <lable for="tel">入职方式</lable>
+                        <lable for="tel">目标岗位</lable>
                     </td>
-                    <td>
-                        <select id="status">
-                            <option>请选择</option>
-                            <option>人才库入职</option>
-                            <option>实习生入职</option>
-                            <option>普通入职</option>
-                        </select>
+                    <td class="t-right">
+                        <select  id="post1"></select>
                     </td>
                 </tr>
-                <tr><!--第一行-->
-                    <td class="t-left">职级</td>
-                    <td class="t-right"><input type="text" name="level" id="level"></td>
-                </tr>
+
                 <tr align="center"><!--第一行-->
                     <td colspan="2">
                         <button onclick="register()">提交</button>
@@ -215,6 +202,12 @@
                         var map=deptMaps[i];
                         $("#dept").append("<option >"+map.dname+"</option>");
                     }
+                    $("#dept1").empty();
+                    $("#dept1").prepend("<option value=''>请选择</option>");
+                    for(var i=0;i<length;i++){
+                        var map=deptMaps[i];
+                        $("#dept1").append("<option >"+map.dname+"</option>");
+                    }
                 }else{
                     alert("提示：操作失败！");
                 }
@@ -240,6 +233,12 @@
                     for(var i=0;i<length;i++){
                         var map=postMaps[i];
                         $("#post").append("<option >"+map.pname+"</option>");
+                    }
+                    $("#post1").empty();
+                    $("#post1").prepend("<option value=''>请选择</option>");
+                    for(var i=0;i<length;i++){
+                        var map=postMaps[i];
+                        $("#post1").append("<option >"+map.pname+"</option>");
                     }
                 }else{
                     alert("提示：操作失败！");
@@ -278,7 +277,7 @@
         $.post("/staff/addStaff",{sname:sname,phone:phone,email:email,deptId:dept_id,postId:post_id,status:status,level:level},function (res) {
             if (res == true){
                 alert("上报成功，等待hr审批~");
-                window.location.href ="/index";
+                window.location.href ="/staff/list";
             } else {
                 alert("信息填写失败，请检查数据重试");
             }
